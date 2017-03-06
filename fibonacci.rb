@@ -13,10 +13,12 @@ def fibs(n)
 end
 
 # Find first n number in the fibonacci sequence recursively
-def fibs_rec(num)
+def fibs_rec!(num, ary)
+  ary[0] = 0 if ary.empty?
   return 0 if num == 0
-  return 1 if num == 1
-  fibs_rec(num - 1) + fibs_rec(num - 2)
+  return ary[1] = 1 if num == 1
+  ary << next_fib_term = fibs_rec!(num - 1, ary) + fibs_rec!(num - 2, [])
+  next_fib_term 
 end
 
 puts("Iteratively determined Fibonacci numbers:")
@@ -29,10 +31,10 @@ end
 
 puts("\n\nRecusivively determined Fibonacci numbers:")
 
-[1, 3, 8].each do |n|
-  puts("The first #{n} fibonacci number(s):")
+[0, 1, 2, 7].each do |n|
+  puts("The first #{n + 1} fibonacci number(s):")
 
   ary = []
-  n.times {|n| ary << fibs_rec(n) }
+  fibs_rec!(n, ary)
   p ary
 end
